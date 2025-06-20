@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import { supabase } from '../lib/supabase'; // 📌 supabase import
 import { useNavigation } from '@react-navigation/native';
 
 interface Game {
   id: string;
   title: string;
+  cover_url?: string;
 }
 
 export default function GameListScreen() {
@@ -15,7 +16,7 @@ export default function GameListScreen() {
 
   useEffect(() => {
     const fetchGames = async () => {
-      const { data, error } = await supabase.from('games').select('*');
+      const { data, error } = await supabase.from('Games').select('*');
       if (error) {
         console.error("Veri çekme hatası:", error.message);
       } else {
@@ -45,6 +46,13 @@ export default function GameListScreen() {
             style={styles.card}
             onPress={() => navigation.navigate('GameDetail', { game: item })}
           >
+            {item.cover_url ? (
+              <Image
+                source={{ uri: item.cover_url }}
+                style={styles.cover}
+                resizeMode="cover"
+              />
+            ) : null}
             <Text style={styles.title}>{item.title}</Text>
           </TouchableOpacity>
         )}
@@ -63,4 +71,10 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 18, fontWeight: 'bold' },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  cover: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
 });
