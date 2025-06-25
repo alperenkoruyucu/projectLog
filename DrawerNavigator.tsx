@@ -3,6 +3,7 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import GameUploader from './screens/GameUploader';
 import { View, Text, Button } from 'react-native';
 import { supabase } from './lib/supabase'; // supabase dosya yoluna göre ayarla
 import { useNavigation } from '@react-navigation/native';
@@ -35,6 +36,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Home" component={HomeScreen} options={{ title: 'Ana Sayfa' }} />
       <Drawer.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profil' }} />
       <Drawer.Screen name="Games" component={GameListScreen} options={{ title: 'Oyunlar' }} />
+      <Drawer.Screen name="Uploader" component={GameUploader} options={{ title: 'Oyunları ekle' }} />
       <Drawer.Screen name="Logout" component={LogoutScreen} options={{ title: 'Çıkış Yap' }} />
     </Drawer.Navigator>
   );
